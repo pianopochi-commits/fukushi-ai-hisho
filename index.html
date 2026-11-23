@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>福祉・法律・医療 伴走AI秘書</title>
+  <style>
+    :root {
+      --primary: #1b6b5a;
+      --primary-light: #e8f3f0;
+      --primary-dark: #134e41;
+      --accent: #d97706;
+      --bg: #f6f8f7;
+      --card: #ffffff;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: #d1d5db;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 40px;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: #ffffff;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    header p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .guide-box {
+      background-color: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 12px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background-color: var(--card);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border: 1px solid #e5e7eb;
+    }
+
+    .step-badge {
+      display: inline-block;
+      background-color: var(--primary);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+      color: var(--primary-dark);
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      margin-top: 12px;
+    }
+
+    label:first-of-type {
+      margin-top: 0;
+    }
+
+    select, input[type="text"], textarea {
+      width: 100%;
+      font-size: 1rem;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background-color: #fff;
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    select:focus, input[type="text"]:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(27, 107, 90, 0.15);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn:active {
+      transform: scale(0.99);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+      margin-top: 16px;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-copy {
+      background-color: var(--accent);
+      color: #ffffff;
+      margin-top: 12px;
+    }
+
+    .btn-copy:hover {
+      background-color: #b45309;
+    }
+
+    .result-area {
+      display: none;
+    }
+
+    .result-area.active {
+      display: block;
+    }
+
+    .prompt-preview {
+      background-color: #f3f4f6;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.88rem;
+      white-space: pre-wrap;
+      max-height: 240px;
+      overflow-y: auto;
+      color: #374151;
+    }
+
+    .ai-links {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .ai-links p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .ai-link-btn {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      background-color: #ffffff;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .ai-link-btn:hover {
+      background-color: var(--primary-light);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1f2937;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    .privacy-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>福祉・法律・医療 伴走AI秘書</h1>
+    <p>相談メモ整理 ＆ 専門家・役所向けメール作成</p>
+  </header>
+
+  <div class="container">
+    <div class="guide-box">
+      頭の中のモヤモヤやメモ書きをそのまま入力してください。<strong>状況の整理・要点まとめ</strong>と、<strong>担当者へ送る丁寧な文章</strong>をAIに作らせるための指示文を自動で組み立てます。
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="card">
+      <span class="step-badge">STEP 1</span>
+      <h2>相談先と状況を入力する</h2>
+
+      <label for="recipient">どこ（誰）に連絡・相談しますか？</label>
+      <select id="recipient">
+        <option value="市役所・区役所の福祉窓口担当者">市役所・区役所の福祉窓口（障害・生活・介護など）</option>
+        <option value="相談支援専門員・ケアマネジャー">相談支援専門員・ケアマネジャー</option>
+        <option value="主治医・病院の医療ソーシャルワーカー（MSW）">主治医・病院の相談員（MSW）</option>
+        <option value="弁護士・法テラス・司法書士">弁護士・法テラス・司法書士</option>
+        <option value="学校・園の先生・スクールカウンセラー">学校・園の先生・スクールカウンセラー</option>
+        <option value="その他（一般的な専門家・窓口）">その他（一般的な専門家・窓口）</option>
+      </select>
+
+      <label for="purpose">一番伝えたいこと・目的（任意）</label>
+      <input type="text" id="purpose" placeholder="例：手続きに必要な書類を知りたい、面談の日程を調整したい">
+
+      <label for="memo">現在の状況やメモ書き（箇条書き・乱文OK）</label>
+      <textarea id="memo" placeholder="例：&#10;・先週から体調が崩れていて手続きに行けていない&#10;・更新期限が今月末までと手紙が来た&#10;・家族の付き添いも難しい状況なので郵送や代理でできるか確認したい"></textarea>
+
+      <button type="button" class="btn btn-primary" onclick="generatePrompt()">
+        AI用の整理＆メール作成指示文をつくる
+      </button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="card result-area" id="resultArea">
+      <span class="step-badge">STEP 2</span>
+      <h2>完成した指示文をコピーしてAIへ送る</h2>
+      <p style="font-size: 0.88rem; margin-bottom: 10px;">
+        下の「指示文をコピーする」を押し、普段お使いのAI（Gemini や ChatGPT など）の入力欄に貼り付けて送信してください。
+      </p>
+
+      <div class="prompt-preview" id="promptOutput"></div>
+
+      <button type="button" class="btn btn-copy" onclick="copyPrompt()">
+        📋 指示文をすべてコピーする
+      </button>
+
+      <div class="ai-links">
+        <p>コピーしたら、下のボタンからAIを開いて貼り付けできます</p>
+        <div class="link-grid">
+          <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="ai-link-btn">Gemini を開く</a>
+          <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="ai-link-btn">ChatGPT を開く</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="privacy-note">
+      ※入力した内容はあなたのスマホ（ブラウザ）内でのみ処理され、このサイト側に保存・送信されることはありません。<br>
+      ※個人情報（氏名・住所・マイナンバー等）は伏せたまま入力し、AIで作った文章に後から書き足すとより安全です。
+    </p>
+  </div>
+
+  <div class="toast" id="toast">コピーしました！AIに貼り付けてください</div>
+
+  <script>
+    function generatePrompt() {
+      const recipient = document.getElementById('recipient').value;
+      const purpose = document.getElementById('purpose').value.trim();
+      const memo = document.getElementById('memo').value.trim();
+
+      if (!memo) {
+        alert('「現在の状況やメモ書き」に、伝えたいことを少しでも入力してください。');
+        document.getElementById('memo').focus();
+        return;
+      }
+
+      const purposeText = purpose ? purpose : '状況の報告と、今後の進め方についての相談';
+
+      const promptText = `あなたは福祉・法律・医療の窓口やりとりに精通した「伴走AI秘書」です。
+以下の【相談メモ】をもとに、相手方に過不足なく状況が伝わるように整理し、すぐに送れる連絡文を作成してください。
+
+【連絡・相談の相手】
+${recipient}
+
+【一番伝えたい目的】
+${purposeText}
+
+【相談メモ（原文）】
+${memo}
+
+---
+【出力してほしい内容】
+1. **状況の要点整理（箇条書き3〜5点）**
+   - 窓口や専門家が状況をパッと把握できるよう、事実と困りごとを客観的に整理してください。
+2. **相手先へ送るメール・問い合わせ文（件名＋本文）**
+   - 相手（${recipient}）に合わせた適切で丁寧な敬語にしてください。
+   - 専門用語がわからなくても失礼にならない自然な表現にしてください。
+   - ［〇〇様］［自分の名前］［連絡先］など、後から書き換える部分は［ ］で分かりやすく示してください。
+3. **面談や電話で伝える場合の「一言メモ」**
+   - 電話や窓口で直接話すときに読み上げられる短い台本（3〜4行）も添えてください。`;
+
+      document.getElementById('promptOutput').textContent = promptText;
+      const resultArea = document.getElementById('resultArea');
+      resultArea.classList.add('active');
+      resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function copyPrompt() {
+      const text = document.getElementById('promptOutput').textContent;
+      if (!text) return;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast();
+        }).catch(() => {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const tempArea = document.createElement('textarea');
+      tempArea.value = text;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempArea);
+      showToast();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
