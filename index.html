@@ -1,34 +1,33 @@
-<!DOCTYPE html>
+
+  <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>福祉・法律・医療 伴走AI秘書</title>
   <style>
     :root {
-      --primary: #1b6b5a;
-      --primary-light: #e8f3f0;
-      --primary-dark: #134e41;
-      --accent: #d97706;
-      --bg: #f6f8f7;
+      --primary: #1b6b52;
+      --primary-dark: #14523e;
+      --primary-light: #e6f2ed;
+      --bg: #f4f6f5;
       --card: #ffffff;
-      --text: #1f2937;
-      --text-muted: #6b7280;
-      --border: #d1d5db;
+      --text: #1f2924;
+      --muted: #5f6d66;
+      --border: #d7e0db;
+      --radius: 12px;
     }
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Meiryo", sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      padding-bottom: 40px;
+      line-height: 1.65;
     }
 
     header {
@@ -36,364 +35,416 @@
       color: #ffffff;
       padding: 20px 16px;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
     header h1 {
-      font-size: 1.25rem;
+      margin: 0;
+      font-size: 1.35rem;
       font-weight: 700;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
     }
 
     header p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 4px;
+      margin: 6px 0 0;
+      font-size: 0.9rem;
+      opacity: 0.92;
     }
 
     .container {
-      max-width: 640px;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 18px 14px 48px;
     }
 
-    .guide-box {
+    .notice-box {
       background-color: var(--primary-light);
       border-left: 4px solid var(--primary);
+      border-radius: 8px;
       padding: 12px 14px;
-      border-radius: 6px;
       font-size: 0.9rem;
-      margin-bottom: 20px;
+      color: var(--text);
+      margin-bottom: 18px;
     }
 
     .card {
       background-color: var(--card);
-      border-radius: 12px;
-      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 18px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
       margin-bottom: 18px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      border: 1px solid #e5e7eb;
     }
 
     .step-badge {
       display: inline-block;
       background-color: var(--primary);
-      color: #fff;
+      color: #ffffff;
       font-size: 0.75rem;
-      font-weight: bold;
-      padding: 2px 10px;
+      font-weight: 700;
+      padding: 3px 10px;
       border-radius: 999px;
       margin-bottom: 8px;
     }
 
-    h2 {
-      font-size: 1.05rem;
-      margin-bottom: 12px;
-      color: var(--primary-dark);
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 1.15rem;
     }
 
-    label {
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    label.field-label {
       display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 0.95rem;
       margin-bottom: 6px;
-      margin-top: 12px;
     }
 
-    label:first-of-type {
-      margin-top: 0;
+    .sub-hint {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 8px;
     }
 
-    select, input[type="text"], textarea {
+    input[type="text"],
+    select,
+    textarea {
       width: 100%;
-      font-size: 1rem;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background-color: #fff;
-      color: var(--text);
       font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text);
+      background-color: #ffffff;
+      border: 1px solid #c3cfc9;
+      border-radius: 8px;
+      padding: 11px 12px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    select:focus, input[type="text"]:focus, textarea:focus {
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(27, 107, 90, 0.15);
+      box-shadow: 0 0 0 3px rgba(27, 107, 82, 0.14);
     }
 
     textarea {
-      min-height: 130px;
+      min-height: 150px;
       resize: vertical;
     }
 
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      font-size: 1rem;
-      font-weight: 700;
-      text-align: center;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .btn:active {
-      transform: scale(0.99);
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background-color: #f9fbfa;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      flex-shrink: 0;
     }
 
     .btn-primary {
+      width: 100%;
       background-color: var(--primary);
       color: #ffffff;
-      margin-top: 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
     }
 
     .btn-primary:hover {
       background-color: var(--primary-dark);
     }
 
-    .btn-copy {
-      background-color: var(--accent);
-      color: #ffffff;
-      margin-top: 12px;
-    }
-
-    .btn-copy:hover {
-      background-color: #b45309;
-    }
-
-    .result-area {
-      display: none;
-    }
-
-    .result-area.active {
-      display: block;
-    }
-
-    .prompt-preview {
-      background-color: #f3f4f6;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 0.88rem;
-      white-space: pre-wrap;
-      max-height: 240px;
-      overflow-y: auto;
-      color: #374151;
-    }
-
-    .ai-links {
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px dashed var(--border);
-    }
-
-    .ai-links p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    .link-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .ai-link-btn {
-      display: block;
-      text-align: center;
-      padding: 10px;
+    .btn-secondary {
       background-color: #ffffff;
-      border: 1px solid var(--primary);
       color: var(--primary);
-      text-decoration: none;
+      border: 1.5px solid var(--primary);
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
       border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
+      padding: 9px 14px;
+      cursor: pointer;
+      margin-top: 10px;
     }
 
-    .ai-link-btn:hover {
+    .btn-secondary:hover {
       background-color: var(--primary-light);
     }
 
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1f2937;
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 999px;
+    .output-card {
+      display: none;
+    }
+
+    .output-card.visible {
+      display: block;
+    }
+
+    pre.prompt-box {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background-color: #f6f8f7;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: inherit;
       font-size: 0.9rem;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      z-index: 100;
+      line-height: 1.6;
+      margin: 0;
     }
 
-    .toast.show {
-      opacity: 1;
+    .copied-msg {
+      display: none;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-left: 10px;
     }
 
-    .privacy-note {
+    .copied-msg.show {
+      display: inline;
+    }
+
+    .footer-note {
       font-size: 0.8rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 20px;
-      line-height: 1.5;
+      color: var(--muted);
+      line-height: 1.6;
+      padding: 0 4px;
+    }
+
+    .footer-note p {
+      margin: 0 0 6px;
     }
   </style>
 </head>
 <body>
-
   <header>
     <h1>福祉・法律・医療 伴走AI秘書</h1>
-    <p>相談メモ整理 ＆ 専門家・役所向けメール作成</p>
+    <p>相談メモ整理 &amp; 専門家・役所向けメール作成</p>
   </header>
 
-  <div class="container">
-    <div class="guide-box">
-      頭の中のモヤモヤやメモ書きをそのまま入力してください。<strong>状況の整理・要点まとめ</strong>と、<strong>担当者へ送る丁寧な文章</strong>をAIに作らせるための指示文を自動で組み立てます。
+  <main class="container">
+    <div class="notice-box">
+      頭の中のモヤモヤやメモ書きをそのまま入力してください。状況の整理・要点まとめと、担当者へ送る丁寧な文章や相談メモをAIに作らせるための指示文を自動で組み立てます。
     </div>
 
-    <!-- STEP 1 -->
-    <div class="card">
+    <form id="helperForm" class="card">
       <span class="step-badge">STEP 1</span>
-      <h2>相談先と状況を入力する</h2>
+      <h2>今の状況と希望を入力する</h2>
 
-      <label for="recipient">どこ（誰）に連絡・相談しますか？</label>
-      <select id="recipient">
-        <option value="市役所・区役所の福祉窓口担当者">市役所・区役所の福祉窓口（障害・生活・介護など）</option>
-        <option value="相談支援専門員・ケアマネジャー">相談支援専門員・ケアマネジャー</option>
-        <option value="主治医・病院の医療ソーシャルワーカー（MSW）">主治医・病院の相談員（MSW）</option>
-        <option value="弁護士・法テラス・司法書士">弁護士・法テラス・司法書士</option>
-        <option value="学校・園の先生・スクールカウンセラー">学校・園の先生・スクールカウンセラー</option>
-        <option value="その他（一般的な専門家・窓口）">その他（一般的な専門家・窓口）</option>
-      </select>
+      <div class="field">
+        <label class="field-label" for="target">
+          相談先は決まっていますか？（任意）
+        </label>
+        <span class="sub-hint">
+          どこに相談すべきか分からなくても大丈夫です。そのまま「まだ決まっていない」を選んでお進みください。
+        </span>
+        <select id="target">
+          <option value="undecided" selected>
+            まだ決まっていない（どこに相談すべきかAIに提案してほしい）
+          </option>
+          <option value="市役所・区役所の福祉窓口（障害・生活支援・介護など）">
+            市役所・区役所の福祉窓口（障害・生活支援・介護など）
+          </option>
+          <option value="地域包括支援センター・相談支援機関">
+            地域包括支援センター・相談支援機関
+          </option>
+          <option value="病院（主治医・看護師・医療ソーシャルワーカー）">
+            病院（主治医・看護師・医療ソーシャルワーカー）
+          </option>
+          <option value="弁護士・司法書士・法テラス">
+            弁護士・司法書士・法テラス
+          </option>
+          <option value="家庭裁判所・成年後見関連窓口">
+            家庭裁判所・成年後見関連窓口
+          </option>
+        </select>
+      </div>
 
-      <label for="purpose">一番伝えたいこと・目的（任意）</label>
-      <input type="text" id="purpose" placeholder="例：手続きに必要な書類を知りたい、面談の日程を調整したい">
+      <div class="field">
+        <label class="field-label" for="situation">
+          現在の状況やメモ書き（箇条書き・乱文OK）
+        </label>
+        <span class="sub-hint">
+          困っていること・期限・体調や家族の状況など、思いついた順で構いません。
+        </span>
+        <textarea
+          id="situation"
+          placeholder="例：&#10;・先週から体調が崩れていて手続きに行けていない&#10;・更新期限が今月末までと手紙が来た&#10;・家族の付き添いも難しい状況なので郵送や代理でできるか確認したい"
+        ></textarea>
+      </div>
 
-      <label for="memo">現在の状況やメモ書き（箇条書き・乱文OK）</label>
-      <textarea id="memo" placeholder="例：&#10;・先週から体調が崩れていて手続きに行けていない&#10;・更新期限が今月末までと手紙が来た&#10;・家族の付き添いも難しい状況なので郵送や代理でできるか確認したい"></textarea>
+      <div class="field">
+        <label class="field-label" for="purpose">
+          一番伝えたいこと・目的（任意）
+        </label>
+        <input
+          type="text"
+          id="purpose"
+          placeholder="例：どこに相談すればいいか知りたい、必要な書類を知りたい、面談の日程を調整したい"
+        />
+      </div>
 
-      <button type="button" class="btn btn-primary" onclick="generatePrompt()">
-        AI用の整理＆メール作成指示文をつくる
-      </button>
-    </div>
-
-    <!-- STEP 2 -->
-    <div class="card result-area" id="resultArea">
-      <span class="step-badge">STEP 2</span>
-      <h2>完成した指示文をコピーしてAIへ送る</h2>
-      <p style="font-size: 0.88rem; margin-bottom: 10px;">
-        下の「指示文をコピーする」を押し、普段お使いのAI（Gemini や ChatGPT など）の入力欄に貼り付けて送信してください。
-      </p>
-
-      <div class="prompt-preview" id="promptOutput"></div>
-
-      <button type="button" class="btn btn-copy" onclick="copyPrompt()">
-        📋 指示文をすべてコピーする
-      </button>
-
-      <div class="ai-links">
-        <p>コピーしたら、下のボタンからAIを開いて貼り付けできます</p>
-        <div class="link-grid">
-          <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="ai-link-btn">Gemini を開く</a>
-          <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="ai-link-btn">ChatGPT を開く</a>
+      <div class="field">
+        <label class="field-label">希望する連絡方法・配慮（任意・複数選択可）</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input type="checkbox" id="careHearing" value="耳が聞こえない・聞こえにくい（筆談・メール・チャットなど文字でのやり取りを希望）" />
+            <span>耳が聞こえない・聞こえにくい（筆談・文字でのやり取り希望）</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="careTension" value="電話や対面だと緊張・パニックになりやすい（事前に要点を整理したい・メールやメモ提示を希望）" />
+            <span>電話や対面だと緊張・パニックになりやすい（メールやメモ提示希望）</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="careProxy" value="家族・親族・代理人として相談している" />
+            <span>家族・代理人としてやり取りしている</span>
+          </label>
         </div>
       </div>
+
+      <button type="submit" class="btn-primary">
+        AI用の整理＆メール作成指示文をつくる
+      </button>
+    </form>
+
+    <section id="outputSection" class="card output-card" aria-live="polite">
+      <span class="step-badge">STEP 2</span>
+      <h2>生成されたAI指示文（コピーしてAIに貼り付け）</h2>
+      <pre id="promptOutput" class="prompt-box"></pre>
+      <button type="button" id="copyBtn" class="btn-secondary">
+        指示文をコピーする
+      </button>
+      <span id="copiedMsg" class="copied-msg">コピーしました！</span>
+    </section>
+
+    <div class="footer-note">
+      <p>
+        ※入力した内容はあなたのスマホ（ブラウザ）内でのみ処理され、このサイト側に保存・送信されることはありません。
+      </p>
+      <p>
+        ※個人情報（氏名・住所・マイナンバー等）は伏せたまま入力し、AIで作った文章に後から書き足すとより安全です。
+      </p>
     </div>
-
-    <p class="privacy-note">
-      ※入力した内容はあなたのスマホ（ブラウザ）内でのみ処理され、このサイト側に保存・送信されることはありません。<br>
-      ※個人情報（氏名・住所・マイナンバー等）は伏せたまま入力し、AIで作った文章に後から書き足すとより安全です。
-    </p>
-  </div>
-
-  <div class="toast" id="toast">コピーしました！AIに貼り付けてください</div>
+  </main>
 
   <script>
-    function generatePrompt() {
-      const recipient = document.getElementById('recipient').value;
-      const purpose = document.getElementById('purpose').value.trim();
-      const memo = document.getElementById('memo').value.trim();
+    const form = document.getElementById("helperForm");
+    const outputSection = document.getElementById("outputSection");
+    const promptOutput = document.getElementById("promptOutput");
+    const copyBtn = document.getElementById("copyBtn");
+    const copiedMsg = document.getElementById("copiedMsg");
 
-      if (!memo) {
-        alert('「現在の状況やメモ書き」に、伝えたいことを少しでも入力してください。');
-        document.getElementById('memo').focus();
-        return;
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const situation = document.getElementById("situation").value.trim() || "（未入力：状況の整理から手伝ってください）";
+      const purpose = document.getElementById("purpose").value.trim() || "（特記事項なし：状況から最も重要な目的を整理してください）";
+      const targetValue = document.getElementById("target").value;
+
+      const cares = [];
+      if (document.getElementById("careHearing").checked) {
+        cares.push(document.getElementById("careHearing").value);
+      }
+      if (document.getElementById("careTension").checked) {
+        cares.push(document.getElementById("careTension").value);
+      }
+      if (document.getElementById("careProxy").checked) {
+        cares.push(document.getElementById("careProxy").value);
       }
 
-      const purposeText = purpose ? purpose : '状況の報告と、今後の進め方についての相談';
+      const careText = cares.length > 0
+        ? cares.map((c) => `- ${c}`).join("\n")
+        : "- 特になし";
 
-      const promptText = `あなたは福祉・法律・医療の窓口やりとりに精通した「伴走AI秘書」です。
-以下の【相談メモ】をもとに、相手方に過不足なく状況が伝わるように整理し、すぐに送れる連絡文を作成してください。
+      const isUndecided = targetValue === "undecided";
+      const targetText = isUndecided
+        ? "まだ決まっていない（どこに相談すべきか提案してほしい）"
+        : targetValue;
 
-【連絡・相談の相手】
-${recipient}
+      const instructions = isUndecided
+        ? `1. 【最初に相談すべき窓口・機関の提案】
+   入力された状況をもとに、まずどこ（どの機関・窓口・専門家）に相談・連絡するのが適切か、優先順位と理由を分かりやすく提案してください。（制度や窓口は地域や状況で異なる場合があるため、確認すべきポイントも添えてください）
+2. 【状況の要点整理】
+   乱文やメモから「現在の状況・困っていること・期限や急ぎ度」を箇条書きで簡潔に整理してください。
+3. 【そのまま使える相談メモ・メール下書き】
+   窓口で見せる、またはメール・問い合わせフォームで送るための、失礼がなく要点を端的にまとめた文章を作成してください。配慮希望がある場合は、冒頭に自然な形で配慮のお願いを入れてください。`
+        : `1. 【状況の要点整理】
+   乱文やメモから「経緯・現在の状況・確認したい質問事項」を整理してください。
+2. 【${targetText} 向けの丁寧なメール・相談文面】
+   相手に対して失礼がなく、かつ要点が曖昧にならないよう論理的かつ丁寧な文章を作成してください。配慮希望がある場合は、冒頭に自然な形で配慮のお願いを入れてください。
+3. 【電話・対面・窓口提示用の短い要約メモ】
+   画面を見せたり、手短に要点を伝えたりするための3〜5行程度の短いまとめも作成してください。`;
 
-【一番伝えたい目的】
-${purposeText}
+      const generatedPrompt = `以下のメモをもとに、手続きや相談の準備を手伝ってください。
 
-【相談メモ（原文）】
-${memo}
+【相談先の状況】
+${targetText}
 
----
-【出力してほしい内容】
-1. **状況の要点整理（箇条書き3〜5点）**
-   - 窓口や専門家が状況をパッと把握できるよう、事実と困りごとを客観的に整理してください。
-2. **相手先へ送るメール・問い合わせ文（件名＋本文）**
-   - 相手（${recipient}）に合わせた適切で丁寧な敬語にしてください。
-   - 専門用語がわからなくても失礼にならない自然な表現にしてください。
-   - ［〇〇様］［自分の名前］［連絡先］など、後から書き換える部分は［ ］で分かりやすく示してください。
-3. **面談や電話で伝える場合の「一言メモ」**
-   - 電話や窓口で直接話すときに読み上げられる短い台本（3〜4行）も添えてください。`;
+【現在の状況・メモ書き】
+${situation}
 
-      document.getElementById('promptOutput').textContent = promptText;
-      const resultArea = document.getElementById('resultArea');
-      resultArea.classList.add('active');
-      resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+【一番伝えたいこと・目的】
+${purpose}
 
-    function copyPrompt() {
-      const text = document.getElementById('promptOutput').textContent;
+【希望する連絡方法・配慮】
+${careText}
+
+【お願いしたいこと】
+${instructions}`;
+
+      promptOutput.textContent = generatedPrompt;
+      outputSection.classList.add("visible");
+      copiedMsg.classList.remove("show");
+      outputSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      const text = promptOutput.textContent;
       if (!text) return;
 
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast();
-        }).catch(() => {
-          fallbackCopy(text);
-        });
-      } else {
-        fallbackCopy(text);
+      try {
+        await navigator.clipboard.writeText(text);
+        copiedMsg.classList.add("show");
+      } catch (e) {
+        const tempArea = document.createElement("textarea");
+        tempArea.value = text;
+        document.body.appendChild(tempArea);
+        tempArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempArea);
+        copiedMsg.classList.add("show");
       }
-    }
-
-    function fallbackCopy(text) {
-      const tempArea = document.createElement('textarea');
-      tempArea.value = text;
-      document.body.appendChild(tempArea);
-      tempArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempArea);
-      showToast();
-    }
-
-    function showToast() {
-      const toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2500);
-    }
+    });
   </script>
 </body>
 </html>
